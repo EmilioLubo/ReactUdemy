@@ -1,12 +1,15 @@
 import { useState } from "react"
-import { AddCategory } from "./components/AddCategory"
+import { AddCategory, GifGrid } from "./components"
+
 
 export const GiffExpertApp = () => {
 
     const [categories, setCategories] = useState([])
 
     const onAddCategory = (value) => {
-        setCategories([...categories, value])
+        if (categories.includes(value.toLowerCase())) 
+            return
+        setCategories([...categories, value.toLowerCase()])
     }
 
   return (
@@ -15,11 +18,13 @@ export const GiffExpertApp = () => {
 
         <AddCategory onNewValue={onAddCategory} />
 
-        <ol>
-            {categories.map(e => {
-                return <li key={e}>{e}</li>
-            })}
-        </ol>
+        
+        {categories.map(e => 
+            (
+                <GifGrid key={e} category={e}/>
+            )
+        )}
+        
     </>
   )
 }
